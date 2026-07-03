@@ -15,7 +15,7 @@
     />
     <meta property="og:image" content="assets/balassones-logo-crop.jpg" />
     <link rel="icon" href="assets/balassones-logo-header.jpg" />
-    <link rel="stylesheet" href="styles.css?v=10" />
+    <link rel="stylesheet" href="styles.css?v=11" />
   </head>
   <body>
     <div id="fb-root"></div>
@@ -130,7 +130,7 @@
               </div>
             </div>
           </div>
-          <aside class="event-card" aria-label="Upcoming event">
+          <aside class="event-card" aria-label="Upcoming event" data-event-card data-event-end="2026-06-20">
             <p class="eyebrow">Upcoming Event</p>
             <img src="assets/roxx-fest-2026.jpg" alt="Roxx Fest 2026 event flyer" />
             <div class="event-content">
@@ -154,6 +154,17 @@
                 Hawthorne Heights, We The Kings, and more.
               </p>
               <a href="https://www.roxxfest.com/" target="_blank" rel="noreferrer">Roxx Fest details</a>
+            </div>
+          </aside>
+          <aside class="event-empty" data-empty-events hidden>
+            <p class="eyebrow">Upcoming Event</p>
+            <div class="event-content">
+              <h3>No upcoming events posted yet.</h3>
+              <p>
+                Follow Balassone's Pizza on Facebook to get notified when new
+                fairs, festivals, and pop-up dates are announced.
+              </p>
+              <a href="https://www.facebook.com/BalassonesPizza" target="_blank" rel="noreferrer">Follow on Facebook</a>
             </div>
           </aside>
         </div>
@@ -180,5 +191,26 @@
         facebook.com/BalassonesPizza
       </a>
     </footer>
+    <script>
+      (() => {
+        const cards = [...document.querySelectorAll("[data-event-card]")];
+        const emptyState = document.querySelector("[data-empty-events]");
+        const now = new Date();
+
+        const visibleCards = cards.filter((card) => {
+          const endDate = card.dataset.eventEnd;
+          if (!endDate) return true;
+
+          const eventEndsAt = new Date(`${endDate}T23:59:59`);
+          const isExpired = now > eventEndsAt;
+          card.hidden = isExpired;
+          return !isExpired;
+        });
+
+        if (emptyState) {
+          emptyState.hidden = visibleCards.length > 0;
+        }
+      })();
+    </script>
   </body>
 </html>
