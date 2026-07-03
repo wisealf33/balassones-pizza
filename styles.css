@@ -426,6 +426,10 @@ h3 {
   overflow: hidden;
 }
 
+.event-column {
+  scroll-margin-top: 7rem;
+}
+
 .event-card > .eyebrow,
 .event-empty > .eyebrow {
   margin: 0;
